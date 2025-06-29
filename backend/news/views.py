@@ -20,3 +20,4 @@ class EditNews(generics.ListCreateAPIView):
     permission_classes=[IsAdminUser]
     queryset = TopArticle.objects.all()
     lookup_field='pk'
+
