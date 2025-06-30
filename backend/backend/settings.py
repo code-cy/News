@@ -34,12 +34,14 @@ ALLOWED_HOSTS = []
 THIRD_PARTY_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
-    'django_celery_beat',
+    # 'django_celery_beat',
 ]
 
 MY_APPS = [
     'Auth',
-    'news'
+    'news.apps.NewsConfig',
+    # 'news',
+
 ]
 
 INSTALLED_APPS = [
@@ -138,30 +140,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-
-from django_celery_beat.models import PeriodicTask, CrontabSchedule
-
-# celery settings
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'UTC'
-
-
-schedule, created = CrontabSchedule.objects.get_or_create(
-    minute='0',
-    hour='9',
-    day_of_week='*',
-    day_of_month='*',
-    month_of_year='*',
-)
-
-PeriodicTask.objects.create(
-    crontab=schedule,
-    name='check update',
-    task='news.tasks.check_update',
-)

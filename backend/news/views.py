@@ -11,7 +11,7 @@ from news.models import TopArticle
 
 class TopNewsView(generics.ListAPIView):
     serializer_class=NewsSerializer
-    permission_classes=[IsAuthenticated]
+    # permission_classes=[IsAuthenticated,IsAdminUser]
     queryset = TopArticle.objects.all()
 
 

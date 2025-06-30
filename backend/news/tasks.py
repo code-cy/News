@@ -26,6 +26,7 @@ def check_update():
         print(f"Error fetching news: {e}")
         return None
 
+
 def DB_is_Empty(data):
     conn = sqlite3.connect('./News/backend/db.sqlite3')
     cursor = conn.cursor()
