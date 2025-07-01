@@ -35,6 +35,7 @@ ALLOWED_HOSTS = []
 THIRD_PARTY_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_filters',
 ]
 
 MY_APPS = [
@@ -87,7 +88,7 @@ REST_FRAMEWORK = {
     
     'DEFAULT_PAGINATION_CLASS':pagination,           # pagination class
     'PAGE_SIZE':5,                                                                          # default pagination class 
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],       # django filters
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'] # django filters
 }
 
 WSGI_APPLICATION = 'backend.wsgi.application'
