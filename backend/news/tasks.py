@@ -5,9 +5,12 @@ from news.models import TopArticle
 from django.utils.dateparse import parse_datetime
 
 def save_articles(q=None):
+    query = None
+    if q:
+        query = q.get('q')
     url = "https://newsapi.org/v2/everything"
     params = {
-        "q": q['q'] if q else "india",
+        "q": query if query else "india",
         "pageSize": 20,
         "apiKey": os.environ.get("NEWS_API")
     }

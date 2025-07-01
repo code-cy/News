@@ -10,40 +10,28 @@ from news.serializer import NewsSerializer
 from news.models import TopArticle
 from .tasks import save_articles
 from news.filters import TopArticalFilter
-
-# class TopNewsView(generics.ListAPIView):
-#     serializer_class = NewsSerializer
-#     # filter_backends = 
-#     def get_queryset(self):
-#         query=TopArticleFilter(request.GET, queryset=Article.objects.all())
-#         save_articles()
-#         if TopArticle.objects.count() > 20:
-#             TopArticle.objects.exclude(
-#                 id__in=TopArticle.objects.order_by('-id')[:20].values_list('id', flat=True)
-#             ).delete()
-
-#         return TopArticle.objects.all()
-    
-
+from .pagination import TopArticalPagination
 
 
 class TopNewsView(generics.ListAPIView):
     serializer_class = NewsSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_class=TopArticalFilter
+    pagination_class=TopArticalPagination
+
     def get_queryset(self):
-        query =self.request.query_params.dict()
+        query =self.request.query_params.dict()  # getting the query paara and passing them to save_artical
 
         print(query)
         save_articles(query)
         if TopArticle.objects.count() > 20:
             TopArticle.objects.exclude(
                 id__in=TopArticle.objects.order_by('-id')[:20].values_list('id', flat=True)
-            ).delete()
+            ).delete()                                                                              #deleteing the artical when it more then 20. only top 20 articals while be save
+        
+
 
         return TopArticle.objects.all()
-        # return filtered.qs  
-
 
 
 
